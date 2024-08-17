@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    restart: always
+    build: ./api
+    ports:
+      - "8000:8000"
+    command: waitress-serve --listen=*:8000 app:app
+  server:
+    container_name: server_nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - api
